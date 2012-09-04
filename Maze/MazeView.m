@@ -76,22 +76,36 @@
         CGRect wall = [value CGRectValue];
         CGRect ballRect = CGRectMake(updatedX-20,updatedY-20,40,40);
         if (CGRectIntersectsRect(wall, ballRect)) {
-            if (pitch > 0 && (CGRectGetMinY(ballRect) <= CGRectGetMaxY(wall)) && (CGRectGetMidX(ballRect) >= CGRectGetMinX(wall)) && (CGRectGetMidX(ballRect) <= CGRectGetMaxX(wall))){// && wall.size.height == 5) {
-                NSLog(@"bottom of ball hits top of wall");
-                updatedY = self.ballLocation.y;
-            }
-            if (pitch < 0 && (CGRectGetMaxY(ballRect) >= CGRectGetMinY(wall))&& (CGRectGetMidX(ballRect) >= CGRectGetMinX(wall)) && (CGRectGetMidX(ballRect) <= CGRectGetMaxX(wall))){// && wall.size.height == 5){
+            if (CGRectGetMaxX(ballRect) >= CGRectGetMinX(wall) && CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall) && (CGRectGetMinY(ballRect) <= CGRectGetMaxY(wall))) {
                 NSLog(@"top of ball hits bottom of wall");
                 updatedY = self.ballLocation.y;
             }
-            if (roll < 0 && (CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall))&& (CGRectGetMidY(ballRect) >= CGRectGetMinY(wall)) && (CGRectGetMidY(ballRect) <= CGRectGetMaxY(wall))){// && wall.size.width == 5){
-                NSLog(@"left side of ball hits right side of wall");
+            if (CGRectGetMaxX(ballRect) >= CGRectGetMinX(wall) && CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall) && (CGRectGetMaxY(ballRect) >= CGRectGetMinY(wall))) {
+                NSLog(@"bottom of ball hits top of wall");
+                updatedY = self.ballLocation.y;
+            }
+            if (CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall) && CGRectGetMinY(ballRect) >= CGRectGetMinY(wall) && (CGRectGetMaxY(ballRect) <= CGRectGetMaxY(wall))) {
+                NSLog(@"left of ball hits right of wall");
                 updatedX = self.ballLocation.x;
             }
-            if (roll > 0 && (CGRectGetMaxX(ballRect) >= CGRectGetMinX(wall))&& (CGRectGetMidY(ballRect) >= CGRectGetMinY(wall)) && (CGRectGetMidY(ballRect) <= CGRectGetMaxY(wall))){// && wall.size.width == 5){
-                NSLog(@"right side of ball hits left side of wall");
-                updatedX = self.ballLocation.x;
-            }
+            
+            
+//            if (pitch > 0 && (CGRectGetMinY(ballRect) <= CGRectGetMaxY(wall))) {
+//                NSLog(@"bottom of ball hits top of wall");
+//                updatedY = self.ballLocation.y;
+//            }
+//            if (pitch < 0 && (CGRectGetMaxY(ballRect) >= CGRectGetMinY(wall))){
+//                NSLog(@"top of ball hits bottom of wall");
+//                updatedY = self.ballLocation.y;
+//            }
+//            if (roll < 0 && (CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall))){
+//                NSLog(@"left side of ball hits right side of wall");
+//                updatedX = self.ballLocation.x;
+//            }
+//            if (roll > 0 && (CGRectGetMaxX(ballRect) >= CGRectGetMinX(wall))){
+//                NSLog(@"right side of ball hits left side of wall");
+//                updatedX = self.ballLocation.x;
+//            }
             /*if (wall.size.height == 5) {
                 updatedY = self.ballLocation.y;
             }
