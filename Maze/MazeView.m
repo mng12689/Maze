@@ -120,6 +120,11 @@
     CGContextAddArc(context,self.ballLocation.x , self.ballLocation.y, 20, 0, 2*M_PI, YES);
     CGContextFillPath(context);
     
+    [[UIColor greenColor]set];
+    CGContextMoveToPoint(context, self.enemyLocation.x, self.enemyLocation.y);
+    CGContextAddArc(context,self.enemyLocation.x , self.enemyLocation.y, 20, 0, 2*M_PI, YES);
+    CGContextFillPath(context);
+    
     [[UIColor greenColor] set];
     for (NSValue *value in self.walls) {
         CGContextFillRect(context, [value CGRectValue]);

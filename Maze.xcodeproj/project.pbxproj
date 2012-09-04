@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C47C65515F6A96C0061621E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C47C65415F6A96C0061621E /* GameKit.framework */; };
 		4CA2729315F52B2200EFD55F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA2729215F52B2200EFD55F /* UIKit.framework */; };
 		4CA2729515F52B2200EFD55F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA2729415F52B2200EFD55F /* Foundation.framework */; };
 		4CA2729715F52B2200EFD55F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA2729615F52B2200EFD55F /* CoreGraphics.framework */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C47C65415F6A96C0061621E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		4CA2728E15F52B2200EFD55F /* Maze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA2729215F52B2200EFD55F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4CA2729415F52B2200EFD55F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C47C65515F6A96C0061621E /* GameKit.framework in Frameworks */,
 				4CA272AD15F52C4E00EFD55F /* CoreMotion.framework in Frameworks */,
 				4CA2729315F52B2200EFD55F /* UIKit.framework in Frameworks */,
 				4CA2729515F52B2200EFD55F /* Foundation.framework in Frameworks */,
@@ -54,6 +57,7 @@
 		4CA2728315F52B2200EFD55F = {
 			isa = PBXGroup;
 			children = (
+				4C47C65415F6A96C0061621E /* GameKit.framework */,
 				4CA2729815F52B2200EFD55F /* Maze */,
 				4CA2729115F52B2200EFD55F /* Frameworks */,
 				4CA2728F15F52B2200EFD55F /* Products */,

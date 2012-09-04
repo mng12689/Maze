@@ -18,6 +18,7 @@
 
 @property id<MazeViewDelegate> delegate;
 @property CGPoint ballLocation;
+@property CGPoint enemyLocation;
 @property (strong) NSMutableArray *walls;
 -(void)moveBallWithPitch:(double)pitch andRoll:(double)roll;
 -(void)createMaze;

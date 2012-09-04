@@ -9,13 +9,16 @@
 #import "MazeViewController.h"
 #import <CoreMotion/CoreMotion.h>
 #import "MazeView.h"
+#import <GameKit/GameKit.h>
 
-@interface MazeViewController () <MazeViewDelegate, UIAlertViewDelegate>
+@interface MazeViewController () <MazeViewDelegate, UIAlertViewDelegate, GKSessionDelegate>
 @property CGPoint ballLocation;
+@property CGPoint enemyLocation;
 
 @property (strong) CMMotionManager *motionManager;
 @property (strong) NSTimer *timer;
 @property (weak) MazeView *mazeView;
+@property (strong) GKSession *session;
 
 @end
 
@@ -27,6 +30,11 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Maneesh" sessionMode:GKSessionModePeer];
+        [self.session setDataReceiveHandler:self withContext:nil];
+        self.session.delegate = self;
+        self.session.available = YES;
+        
         self.motionManager = [CMMotionManager new];
     }
     return self;
@@ -69,6 +77,7 @@
     self.mazeView.ballLocation = self.ballLocation;
     [self.mazeView moveBallWithPitch:pitch andRoll:roll];
     self.ballLocation = self.mazeView.ballLocation;
+    [self sendData];
 }
 
 -(void)playerDidWin
@@ -91,6 +100,32 @@
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     [self resetGame];
+}
+
+- (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
+{
+    [self.session acceptConnectionFromPeer:peerID error:nil];
+    self.session.available = NO;
+    NSLog(@"Connection accepted");
+}
+
+-(void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
+{
+    
+}
+
+-(void)receiveData:(NSData*)data fromPeer:(NSString*)peer inSession:(GKSession*)session context:(void*)context
+{
+    self.enemyLocation = CGPointFromString([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    self.mazeView.enemyLocation = self.enemyLocation;
+    [self.mazeView setNeedsDisplay];
+    
+}
+
+-(void)sendData
+{
+    NSData *payload =  [NSStringFromCGPoint(self.ballLocation) dataUsingEncoding:NSUTF8StringEncoding];
+    [self.session sendDataToAllPeers:payload withDataMode:GKSendDataReliable error:nil];
 }
 
 @end
