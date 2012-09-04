@@ -14,6 +14,7 @@
 @interface MazeViewController () <MazeViewDelegate, UIAlertViewDelegate, GKSessionDelegate>
 @property CGPoint ballLocation;
 @property CGPoint enemyLocation;
+@property BOOL primary;
 
 @property (strong) CMMotionManager *motionManager;
 @property (strong) NSTimer *timer;
@@ -104,35 +105,60 @@
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
 {
+    NSLog(@"connection requested");
     [self.session acceptConnectionFromPeer:peerID error:nil];
     self.session.available = NO;
     NSLog(@"Connection accepted");
+    self.primary = YES;
 }
 
 -(void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
 {
     if (state == GKPeerStateAvailable) {
-        NSLog(@"found peer");
+        NSLog(@"Connecting to peer: %@\n", peerID);
+        
         [self.session connectToPeer:peerID withTimeout:2];
+        NSLog(@"after peer connect");
     } else if (state == GKPeerStateConnected) {
         NSLog(@"connected");
-        session.available = NO;
+        self.session.available = NO;
+        if (self.primary) {
+            [self sendMap];
+        }
+    } else if (state == GKPeerStateDisconnected) {
+        self.session.available = YES;
+        self.primary = NO;
     }
-    
 }
 
 -(void)receiveData:(NSData*)data fromPeer:(NSString*)peer inSession:(GKSession*)session context:(void*)context
 {
-    self.enemyLocation = CGPointFromString([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-    self.mazeView.enemyLocation = self.enemyLocation;
-    [self.mazeView setNeedsDisplay];
+    id received = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    if ([received isKindOfClass:[NSMutableArray class]]) {
+        NSLog(@"walls received");
+        self.mazeView.walls = received;
+        //NSLog(@"walls are %@", self.mazeView.walls);
+    } else if ([received isKindOfClass:[NSString class]]) {
+        //NSLog(@"received location");
+        self.enemyLocation = CGPointFromString(received);
+        //NSLog(@"%f, %f", self.enemyLocation.x, self.enemyLocation.y);
+        self.mazeView.enemyLocation = self.enemyLocation;
+    };
     
+}
+
+-(void)sendMap {
+    //encode self.mazeView.walls
+    NSData *mapData = [NSKeyedArchiver archivedDataWithRootObject:self.mazeView.walls];
+    [self.session sendDataToAllPeers:mapData withDataMode:GKSendDataReliable error:nil];
+    NSLog(@"map sent");
 }
 
 -(void)sendData
 {
-    NSData *payload =  [NSStringFromCGPoint(self.ballLocation) dataUsingEncoding:NSUTF8StringEncoding];
-    [self.session sendDataToAllPeers:payload withDataMode:GKSendDataReliable error:nil];
+    NSData *payload =  [NSKeyedArchiver archivedDataWithRootObject:NSStringFromCGPoint(self.ballLocation)];
+    [self.session sendDataToAllPeers:payload withDataMode:GKSendDataUnreliable error:nil];
+    //NSLog(@"data sent!");
 }
 
 @end

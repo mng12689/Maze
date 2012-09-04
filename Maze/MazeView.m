@@ -121,6 +121,7 @@
     CGContextFillPath(context);
     
     [[UIColor greenColor]set];
+    //NSLog(@"%f, %f", self.enemyLocation.x, self.enemyLocation.y);
     CGContextMoveToPoint(context, self.enemyLocation.x, self.enemyLocation.y);
     CGContextAddArc(context,self.enemyLocation.x , self.enemyLocation.y, 20, 0, 2*M_PI, YES);
     CGContextFillPath(context);
