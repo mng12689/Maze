@@ -111,6 +111,13 @@
 
 -(void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
 {
+    if (state == GKPeerStateAvailable) {
+        NSLog(@"found peer");
+        [self.session connectToPeer:peerID withTimeout:2];
+    } else if (state == GKPeerStateConnected) {
+        NSLog(@"connected");
+        session.available = NO;
+    }
     
 }
 
