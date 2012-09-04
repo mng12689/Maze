@@ -1,0 +1,290 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4CA2729315F52B2200EFD55F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA2729215F52B2200EFD55F /* UIKit.framework */; };
+		4CA2729515F52B2200EFD55F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA2729415F52B2200EFD55F /* Foundation.framework */; };
+		4CA2729715F52B2200EFD55F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA2729615F52B2200EFD55F /* CoreGraphics.framework */; };
+		4CA2729D15F52B2200EFD55F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CA2729B15F52B2200EFD55F /* InfoPlist.strings */; };
+		4CA2729F15F52B2200EFD55F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA2729E15F52B2200EFD55F /* main.m */; };
+		4CA272A315F52B2200EFD55F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA272A215F52B2200EFD55F /* AppDelegate.m */; };
+		4CA272AB15F52B5300EFD55F /* MazeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA272AA15F52B5300EFD55F /* MazeViewController.m */; };
+		4CA272AD15F52C4E00EFD55F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA272AC15F52C4E00EFD55F /* CoreMotion.framework */; };
+		4CA272B715F5332D00EFD55F /* BallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA272B615F5332D00EFD55F /* BallView.m */; };
+		4CA272BA15F53E7300EFD55F /* MazeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA272B915F53E7300EFD55F /* MazeView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4CA2728E15F52B2200EFD55F /* Maze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maze.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CA2729215F52B2200EFD55F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4CA2729415F52B2200EFD55F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4CA2729615F52B2200EFD55F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4CA2729A15F52B2200EFD55F /* Maze-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Maze-Info.plist"; sourceTree = "<group>"; };
+		4CA2729C15F52B2200EFD55F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4CA2729E15F52B2200EFD55F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4CA272A015F52B2200EFD55F /* Maze-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Maze-Prefix.pch"; sourceTree = "<group>"; };
+		4CA272A115F52B2200EFD55F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4CA272A215F52B2200EFD55F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4CA272A915F52B5300EFD55F /* MazeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeViewController.h; sourceTree = "<group>"; };
+		4CA272AA15F52B5300EFD55F /* MazeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeViewController.m; sourceTree = "<group>"; };
+		4CA272AC15F52C4E00EFD55F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		4CA272B515F5332D00EFD55F /* BallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallView.h; sourceTree = "<group>"; };
+		4CA272B615F5332D00EFD55F /* BallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallView.m; sourceTree = "<group>"; };
+		4CA272B815F53E7300EFD55F /* MazeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeView.h; sourceTree = "<group>"; };
+		4CA272B915F53E7300EFD55F /* MazeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4CA2728B15F52B2200EFD55F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CA272AD15F52C4E00EFD55F /* CoreMotion.framework in Frameworks */,
+				4CA2729315F52B2200EFD55F /* UIKit.framework in Frameworks */,
+				4CA2729515F52B2200EFD55F /* Foundation.framework in Frameworks */,
+				4CA2729715F52B2200EFD55F /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4CA2728315F52B2200EFD55F = {
+			isa = PBXGroup;
+			children = (
+				4CA2729815F52B2200EFD55F /* Maze */,
+				4CA2729115F52B2200EFD55F /* Frameworks */,
+				4CA2728F15F52B2200EFD55F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4CA2728F15F52B2200EFD55F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CA2728E15F52B2200EFD55F /* Maze.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4CA2729115F52B2200EFD55F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CA272AC15F52C4E00EFD55F /* CoreMotion.framework */,
+				4CA2729215F52B2200EFD55F /* UIKit.framework */,
+				4CA2729415F52B2200EFD55F /* Foundation.framework */,
+				4CA2729615F52B2200EFD55F /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4CA2729815F52B2200EFD55F /* Maze */ = {
+			isa = PBXGroup;
+			children = (
+				4CA272A115F52B2200EFD55F /* AppDelegate.h */,
+				4CA272A215F52B2200EFD55F /* AppDelegate.m */,
+				4CA272A915F52B5300EFD55F /* MazeViewController.h */,
+				4CA272AA15F52B5300EFD55F /* MazeViewController.m */,
+				4CA272B815F53E7300EFD55F /* MazeView.h */,
+				4CA272B915F53E7300EFD55F /* MazeView.m */,
+				4CA272B515F5332D00EFD55F /* BallView.h */,
+				4CA272B615F5332D00EFD55F /* BallView.m */,
+				4CA2729915F52B2200EFD55F /* Supporting Files */,
+			);
+			path = Maze;
+			sourceTree = "<group>";
+		};
+		4CA2729915F52B2200EFD55F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CA2729A15F52B2200EFD55F /* Maze-Info.plist */,
+				4CA2729B15F52B2200EFD55F /* InfoPlist.strings */,
+				4CA2729E15F52B2200EFD55F /* main.m */,
+				4CA272A015F52B2200EFD55F /* Maze-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4CA2728D15F52B2200EFD55F /* Maze */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4CA272A615F52B2200EFD55F /* Build configuration list for PBXNativeTarget "Maze" */;
+			buildPhases = (
+				4CA2728A15F52B2200EFD55F /* Sources */,
+				4CA2728B15F52B2200EFD55F /* Frameworks */,
+				4CA2728C15F52B2200EFD55F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Maze;
+			productName = Maze;
+			productReference = 4CA2728E15F52B2200EFD55F /* Maze.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4CA2728515F52B2200EFD55F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Michael Ng";
+			};
+			buildConfigurationList = 4CA2728815F52B2200EFD55F /* Build configuration list for PBXProject "Maze" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4CA2728315F52B2200EFD55F;
+			productRefGroup = 4CA2728F15F52B2200EFD55F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4CA2728D15F52B2200EFD55F /* Maze */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4CA2728C15F52B2200EFD55F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CA2729D15F52B2200EFD55F /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4CA2728A15F52B2200EFD55F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CA2729F15F52B2200EFD55F /* main.m in Sources */,
+				4CA272A315F52B2200EFD55F /* AppDelegate.m in Sources */,
+				4CA272AB15F52B5300EFD55F /* MazeViewController.m in Sources */,
+				4CA272B715F5332D00EFD55F /* BallView.m in Sources */,
+				4CA272BA15F53E7300EFD55F /* MazeView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4CA2729B15F52B2200EFD55F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CA2729C15F52B2200EFD55F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4CA272A415F52B2200EFD55F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4CA272A515F52B2200EFD55F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4CA272A715F52B2200EFD55F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Maze/Maze-Prefix.pch";
+				INFOPLIST_FILE = "Maze/Maze-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4CA272A815F52B2200EFD55F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Maze/Maze-Prefix.pch";
+				INFOPLIST_FILE = "Maze/Maze-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4CA2728815F52B2200EFD55F /* Build configuration list for PBXProject "Maze" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CA272A415F52B2200EFD55F /* Debug */,
+				4CA272A515F52B2200EFD55F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CA272A615F52B2200EFD55F /* Build configuration list for PBXNativeTarget "Maze" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CA272A715F52B2200EFD55F /* Debug */,
+				4CA272A815F52B2200EFD55F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4CA2728515F52B2200EFD55F /* Project object */;
+}
