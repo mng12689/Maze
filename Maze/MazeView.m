@@ -10,7 +10,7 @@
 
 @interface MazeView ()
 
-@property (strong) NSMutableArray *walls;
+
 
 @end
 
@@ -22,29 +22,47 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor blackColor];
-        [self createWalls];
+        [self createMaze];
         
     }
     return self;
 }
 
--(void)createWalls {
+-(void)createMaze {
     self.walls = [NSMutableArray new];
-    NSMutableArray *wallPoints = [NSMutableArray new];
-    
-    for (int i = 0; i< 20; i++) {
-        CGPoint point = CGPointMake(arc4random() % 320, arc4random() % 480);
-        [wallPoints addObject:[NSValue valueWithCGPoint:point]];
-    }
-    for (int i= 0; i< wallPoints.count; i=i+2) {
-        CGPoint p1 = [[wallPoints objectAtIndex:i] CGPointValue];
-        CGPoint p2 = [[wallPoints objectAtIndex:i+1] CGPointValue];
+    while (self.walls.count < 15) {
+        CGRect wallCandidate;
         if (arc4random() %2 ==0)  {
-            [self.walls addObject:[NSValue valueWithCGRect:CGRectMake(p1.x, p1.y, 5, [self distanceFromLocation:p1 toLocation:p2])]];
+            wallCandidate = CGRectMake(arc4random()%320, arc4random()%480, 5, arc4random()%50+60);
         } else {
-            [self.walls addObject:[NSValue valueWithCGRect:CGRectMake(p1.x, p1.y,[self distanceFromLocation:p1 toLocation:p2],5)]];
+            wallCandidate = CGRectMake(arc4random()%320, arc4random()%480,arc4random()%50+60,5);
+        }
+        BOOL intersects = NO;
+        for (NSValue *val in self.walls) {
+            CGRect bigRect = CGRectMake([val CGRectValue].origin.x-55, [val CGRectValue].origin.y-55, [val CGRectValue].size.width+90, [val CGRectValue].size.height+90);
+            if (CGRectIntersectsRect(bigRect, wallCandidate)) {
+                intersects = YES;
+                break;
+            }
+        }
+        if (!intersects) {
+            [self.walls addObject:[NSValue valueWithCGRect:wallCandidate]];
         }
     }
+    
+    BOOL intersects = YES;
+    while (intersects) {
+        self.ballLocation = CGPointMake((arc4random() %(300-20))+20, (arc4random() %(460-20))+20);
+        CGRect ballRect = CGRectMake(self.ballLocation.x-20, self.ballLocation.y-20, 40, 40);
+        intersects = NO;
+        for (NSValue *val in self.walls) {
+            if (CGRectIntersectsRect([val CGRectValue], ballRect)) {
+                intersects = YES;
+                break;
+            }
+        }
+    }
+    [self setNeedsDisplay];
 }
     
 - (double) distanceFromLocation:(CGPoint)p1 toLocation:(CGPoint)p2
@@ -62,8 +80,8 @@
 }
 
 -(void)moveBallWithPitch:(double)pitch andRoll:(double)roll {
-    double updatedX = self.ballLocation.x + roll*20;
-    double updatedY = self.ballLocation.y + pitch*20;
+    double updatedX = self.ballLocation.x + roll*5;
+    double updatedY = self.ballLocation.y + pitch*5;
     
     if (updatedX < 20 || updatedX > 300) {
         updatedX = self.ballLocation.x;
@@ -74,49 +92,17 @@
     
     for (NSValue *value in self.walls) {
         CGRect wall = [value CGRectValue];
-        CGRect ballRect = CGRectMake(updatedX-20,updatedY-20,40,40);
-        if (CGRectIntersectsRect(wall, ballRect)) {
-            if (CGRectGetMaxX(ballRect) >= CGRectGetMinX(wall) && CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall) && (CGRectGetMinY(ballRect) <= CGRectGetMaxY(wall))) {
-                NSLog(@"top of ball hits bottom of wall");
-                updatedY = self.ballLocation.y;
-            }
-            if (CGRectGetMaxX(ballRect) >= CGRectGetMinX(wall) && CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall) && (CGRectGetMaxY(ballRect) >= CGRectGetMinY(wall))) {
-                NSLog(@"bottom of ball hits top of wall");
-                updatedY = self.ballLocation.y;
-            }
-            if (CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall) && CGRectGetMinY(ballRect) >= CGRectGetMinY(wall) && (CGRectGetMaxY(ballRect) <= CGRectGetMaxY(wall))) {
-                NSLog(@"left of ball hits right of wall");
-                updatedX = self.ballLocation.x;
-            }
-            
-            
-//            if (pitch > 0 && (CGRectGetMinY(ballRect) <= CGRectGetMaxY(wall))) {
-//                NSLog(@"bottom of ball hits top of wall");
-//                updatedY = self.ballLocation.y;
-//            }
-//            if (pitch < 0 && (CGRectGetMaxY(ballRect) >= CGRectGetMinY(wall))){
-//                NSLog(@"top of ball hits bottom of wall");
-//                updatedY = self.ballLocation.y;
-//            }
-//            if (roll < 0 && (CGRectGetMinX(ballRect) <= CGRectGetMaxX(wall))){
-//                NSLog(@"left side of ball hits right side of wall");
-//                updatedX = self.ballLocation.x;
-//            }
-//            if (roll > 0 && (CGRectGetMaxX(ballRect) >= CGRectGetMinX(wall))){
-//                NSLog(@"right side of ball hits left side of wall");
-//                updatedX = self.ballLocation.x;
-//            }
-            /*if (wall.size.height == 5) {
-                updatedY = self.ballLocation.y;
-            }
-            else{
-                updatedX = self.ballLocation.x;
-            }*/
+        CGRect xMove = CGRectMake(updatedX-20, self.ballLocation.y-20, 40, 40);
+        CGRect yMove = CGRectMake(self.ballLocation.x-20, updatedY-20, 40, 40);
+        if (CGRectIntersectsRect(wall, xMove)) {
+            updatedX = self.ballLocation.x;
+        }
+        if (CGRectIntersectsRect(wall, yMove)) {
+            updatedY = self.ballLocation.y;
         }
     }
     self.ballLocation = CGPointMake(updatedX, updatedY);
     
-    //self.frame = CGRectMake(self.frame.origin.x + roll*20 ,self.frame.origin.y + pitch*20,40,40);
     [self checkWin];
     [self setNeedsDisplay];
 }
@@ -132,11 +118,9 @@
     [[UIColor redColor]set];
     CGContextMoveToPoint(context, self.ballLocation.x, self.ballLocation.y);
     CGContextAddArc(context,self.ballLocation.x , self.ballLocation.y, 20, 0, 2*M_PI, YES);
-    //CGContextFillEllipseInRect(context, CGRectMake(self.ballLocation.x-20, self.ballLocation.y-20, self.ballLocation.x +20, self.ballLocation.y+20));
     CGContextFillPath(context);
     
     [[UIColor greenColor] set];
-    //BOOL draw = YES;
     for (NSValue *value in self.walls) {
         CGContextFillRect(context, [value CGRectValue]);
         

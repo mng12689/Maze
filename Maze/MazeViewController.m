@@ -10,22 +10,17 @@
 #import <CoreMotion/CoreMotion.h>
 #import "MazeView.h"
 
-@interface MazeViewController () <MazeViewDelegate>
+@interface MazeViewController () <MazeViewDelegate, UIAlertViewDelegate>
 @property CGPoint ballLocation;
 
 @property (strong) CMMotionManager *motionManager;
 @property (strong) NSTimer *timer;
 @property (weak) MazeView *mazeView;
-//@property (strong) BallView *ball;
 
 @end
 
 @implementation MazeViewController
--(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
-    [self.mazeView createWalls];
-    self.ballLocation = CGPointMake((arc4random() %(300-20))+20, (arc4random() %(460-20))+20);
 
-}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,30 +35,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //self.ball = [[BallView alloc]initWithFrame:CGRectMake((arc4random() %(300-20))+20, (arc4random() %(460-20))+20, 40, 40)];
-    //[self.view addSubview:self.ball];
-    MazeView *mazeView = [[MazeView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-    mazeView.delegate = self;
-    self.view = mazeView;
-    self.mazeView = mazeView;
-    self.ballLocation = CGPointMake((arc4random() %(300-20))+20, (arc4random() %(460-20))+20);
+    [self resetGame];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
+    NSLog(@"view appear!");
     [self.motionManager startDeviceMotionUpdates];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateBallPosition) userInfo:nil repeats:YES];
+    //[self resetGame];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    NSLog(@"view disappear!");
     [self.motionManager stopDeviceMotionUpdates];
     [self.timer invalidate];
 }
@@ -77,8 +66,6 @@
 {
     double pitch = [[self.motionManager deviceMotion] attitude].pitch;
     double roll = [[self.motionManager deviceMotion] attitude].roll;
-    //NSLog(@"Pitch: %f",[[self.motionManager deviceMotion] attitude].pitch);
-    //NSLog(@"Roll: %f",[[self.motionManager deviceMotion] attitude].roll);
     self.mazeView.ballLocation = self.ballLocation;
     [self.mazeView moveBallWithPitch:pitch andRoll:roll];
     self.ballLocation = self.mazeView.ballLocation;
@@ -87,8 +74,23 @@
 -(void)playerDidWin
 {
     [self.timer invalidate];
+
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You win!" message:@"Good job!" delegate:nil cancelButtonTitle:@"OK!" otherButtonTitles:nil];
+    alert.delegate = self;
     [alert show];
+}
+
+-(void)resetGame {
+    MazeView *mazeView = [[MazeView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    mazeView.delegate = self;
+    self.view = mazeView;
+    self.mazeView = mazeView;
+    self.ballLocation = self.mazeView.ballLocation;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateBallPosition) userInfo:nil repeats:YES];
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    [self resetGame];
 }
 
 @end

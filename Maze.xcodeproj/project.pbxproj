@@ -15,7 +15,6 @@
 		4CA272A315F52B2200EFD55F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA272A215F52B2200EFD55F /* AppDelegate.m */; };
 		4CA272AB15F52B5300EFD55F /* MazeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA272AA15F52B5300EFD55F /* MazeViewController.m */; };
 		4CA272AD15F52C4E00EFD55F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA272AC15F52C4E00EFD55F /* CoreMotion.framework */; };
-		4CA272B715F5332D00EFD55F /* BallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA272B615F5332D00EFD55F /* BallView.m */; };
 		4CA272BA15F53E7300EFD55F /* MazeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA272B915F53E7300EFD55F /* MazeView.m */; };
 /* End PBXBuildFile section */
 
@@ -33,8 +32,6 @@
 		4CA272A915F52B5300EFD55F /* MazeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeViewController.h; sourceTree = "<group>"; };
 		4CA272AA15F52B5300EFD55F /* MazeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeViewController.m; sourceTree = "<group>"; };
 		4CA272AC15F52C4E00EFD55F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		4CA272B515F5332D00EFD55F /* BallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallView.h; sourceTree = "<group>"; };
-		4CA272B615F5332D00EFD55F /* BallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallView.m; sourceTree = "<group>"; };
 		4CA272B815F53E7300EFD55F /* MazeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeView.h; sourceTree = "<group>"; };
 		4CA272B915F53E7300EFD55F /* MazeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,8 +88,6 @@
 				4CA272AA15F52B5300EFD55F /* MazeViewController.m */,
 				4CA272B815F53E7300EFD55F /* MazeView.h */,
 				4CA272B915F53E7300EFD55F /* MazeView.m */,
-				4CA272B515F5332D00EFD55F /* BallView.h */,
-				4CA272B615F5332D00EFD55F /* BallView.m */,
 				4CA2729915F52B2200EFD55F /* Supporting Files */,
 			);
 			path = Maze;
@@ -174,7 +169,6 @@
 				4CA2729F15F52B2200EFD55F /* main.m in Sources */,
 				4CA272A315F52B2200EFD55F /* AppDelegate.m in Sources */,
 				4CA272AB15F52B5300EFD55F /* MazeViewController.m in Sources */,
-				4CA272B715F5332D00EFD55F /* BallView.m in Sources */,
 				4CA272BA15F53E7300EFD55F /* MazeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +277,7 @@
 				4CA272A815F52B2200EFD55F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
