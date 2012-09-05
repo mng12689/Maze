@@ -9,7 +9,6 @@
 #import "MazeView.h"
 
 @interface MazeView ()
-
 @end
 
 @implementation MazeView
