@@ -17,7 +17,7 @@
 @property BOOL primary;
 
 @property (strong) CMMotionManager *motionManager;
-@property (strong) NSTimer *timer;
+//@property (strong) NSTimer *timer;
 @property (weak) MazeView *mazeView;
 @property (strong) GKSession *session;
 
@@ -55,15 +55,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"view appear!");
-    [self.motionManager startDeviceMotionUpdates];
+    
     //[self resetGame];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     NSLog(@"view disappear!");
-    [self.motionManager stopDeviceMotionUpdates];
-    [self.timer invalidate];
+    //[self.motionManager stopDeviceMotionUpdates];
+    //[self.timer invalidate];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -83,8 +83,8 @@
 
 -(void)playerDidWin
 {
-    [self.timer invalidate];
-
+    //[self.timer invalidate];
+    [self.motionManager stopDeviceMotionUpdates];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You win!" message:@"Good job!" delegate:nil cancelButtonTitle:@"OK!" otherButtonTitles:nil];
     alert.delegate = self;
     [alert show];
@@ -96,7 +96,9 @@
     self.view = mazeView;
     self.mazeView = mazeView;
     self.ballLocation = self.mazeView.ballLocation;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateBallPosition) userInfo:nil repeats:YES];
+    [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:^(CMDeviceMotion *motion, NSError *error) {
+        [self updateBallPosition];
+    }];
 }
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
