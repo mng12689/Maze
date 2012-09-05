@@ -16,23 +16,11 @@
 
 @implementation MazeView
 
-- (id)initAsReceiver
-{
-    self = [super initWithFrame:CGRectMake(0, 0, 320, 480)];
-    if (self) {
-        self.backgroundColor = [UIColor blackColor];
-    }
-    return self;
-}
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
         self.backgroundColor = [UIColor blackColor];
-        [self createMaze];
-        
     }
     return self;
 }
@@ -58,8 +46,6 @@
             [self.walls addObject:[NSValue valueWithCGRect:wallCandidate]];
         }
     }
-    [self placeBall];
-    [self setNeedsDisplay];
 }
 
 -(void)placeBall {

@@ -22,7 +22,6 @@
 @property (strong) NSMutableArray *walls;
 -(void)moveBallWithPitch:(double)pitch andRoll:(double)roll;
 -(void)createMaze;
--(id)initAsReceiver;
 -(void)placeBall;
 
 @end

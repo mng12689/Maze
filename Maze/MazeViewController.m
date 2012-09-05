@@ -17,7 +17,6 @@
 @property BOOL primary;
 
 @property (strong) CMMotionManager *motionManager;
-//@property (strong) NSTimer *timer;
 @property (weak) MazeView *mazeView;
 @property (strong) GKSession *session;
 
@@ -54,7 +53,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
+    self.mazeView = [[MazeView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
+    self.mazeView.delegate = self;
+    self.view = self.mazeView;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -86,32 +87,23 @@
     [alert show];
 }
 
--(void)resetGame {
-    MazeView *mazeView = [[MazeView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-    mazeView.delegate = self;
-    self.view = mazeView;
-    self.mazeView = mazeView;
+-(void)resetGameAsPrimary {
+    [self.mazeView createMaze];
+    [self.mazeView placeBall];
+    [self sendMap];
     self.ballLocation = self.mazeView.ballLocation;
     [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:^(CMDeviceMotion *motion, NSError *error) {
         [self updateBallPosition];
     }];
-    [self sendMap];
 }
 
 -(void)resetGameAsReceiver {
-    MazeView *mazeView = [[MazeView alloc] initAsReceiver];
-    mazeView.delegate = self;
-    self.view = mazeView;
-    self.mazeView = mazeView;
-    [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:^(CMDeviceMotion *motion, NSError *error) {
-        [self updateBallPosition];
-    }];
-
+    NSLog(@"resetting as receiver");
 }
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (self.primary) {
-        [self resetGame];
+        [self resetGameAsPrimary];
     }
     else{
         [self resetGameAsReceiver];
@@ -138,7 +130,7 @@
         //NSLog(@"connected");
         self.session.available = NO;
         if (self.primary) {
-            [self resetGame];
+            [self resetGameAsPrimary];
         } else {
             [self resetGameAsReceiver];
         }
@@ -151,17 +143,14 @@
 {
     id received = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if ([received isKindOfClass:[NSMutableArray class]]) {
-        //NSLog(@"walls received");
-        //NSLog(@"recieved is %@", received);
-        //NSLog(@"mazeview is %@", self.mazeView);
         self.mazeView.walls = (NSMutableArray *)received;
-        //NSLog(@"walls are %@", self.mazeView.walls);
         [self.mazeView placeBall];
         self.ballLocation = self.mazeView.ballLocation;
+        [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:^(CMDeviceMotion *motion, NSError *error) {
+            [self updateBallPosition];
+        }];
     } else if ([received isKindOfClass:[NSString class]]) {
-       // NSLog(@"received location");
         self.enemyLocation = CGPointFromString(received);
-        //NSLog(@"%f, %f", self.enemyLocation.x, self.enemyLocation.y);
         self.mazeView.enemyLocation = self.enemyLocation;
     };
     
