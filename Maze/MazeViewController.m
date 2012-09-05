@@ -34,7 +34,7 @@
         self.mazeView.delegate = self;
         self.view = self.mazeView;
 
-        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Maneesh" sessionMode:GKSessionModePeer];
+        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Mike" sessionMode:GKSessionModePeer];
         [self.session setDataReceiveHandler:self withContext:nil];
         self.session.delegate = self;
         self.session.available = YES;
@@ -119,7 +119,9 @@
     [self.mazeView placeBall];
     self.ballLocation = self.mazeView.ballLocation;
     [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:^(CMDeviceMotion *motion, NSError *error) {
-        [self updateBallPosition];
+        if (!self.gameOver) {
+            [self updateBallPosition];
+        }
     }];
 }
 

@@ -13,8 +13,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "45"
          endingLineNumber = "45"
-         landmarkName = "@implementation MazeViewController"
-         landmarkType = "3">
+         landmarkName = "-initWithNibName:bundle:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
