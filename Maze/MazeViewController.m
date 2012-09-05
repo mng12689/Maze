@@ -17,19 +17,21 @@
 @property BOOL primary;
 
 @property (strong) CMMotionManager *motionManager;
-@property (weak) MazeView *mazeView;
+@property (strong) MazeView *mazeView;
 @property (strong) GKSession *session;
 
 @end
 
 @implementation MazeViewController
 
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.mazeView = [[MazeView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
+        self.mazeView.delegate = self;
+        self.view = self.mazeView;
+
         self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Mike" sessionMode:GKSessionModePeer];
         [self.session setDataReceiveHandler:self withContext:nil];
         self.session.delegate = self;
@@ -53,9 +55,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.mazeView = [[MazeView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
-    self.mazeView.delegate = self;
-    self.view = self.mazeView;
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -78,16 +78,28 @@
     [self sendData];
 }
 
--(void)playerDidWin
+-(void)gameOverPlayerDidWin:(BOOL)won
 {
-    //[self.timer invalidate];
     [self.motionManager stopDeviceMotionUpdates];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You win!" message:@"Good job!" delegate:nil cancelButtonTitle:@"OK!" otherButtonTitles:nil];
+    
+    NSString *title;
+    NSString *message;
+    
+    if (won) {
+        title = @"You won!";
+        message = @"Good job!";
+    }
+    else{
+        title = @"You lost.";
+        message = @"You suck.";
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK!" otherButtonTitles:nil];
     alert.delegate = self;
     [alert show];
 }
 
 -(void)resetGameAsPrimary {
+    NSLog(@"mazeView: %@",self.mazeView);
     [self.mazeView createMaze];
     [self.mazeView placeBall];
     [self sendMap];
@@ -112,22 +124,22 @@
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
 {
-    //NSLog(@"connection requested");
+    NSLog(@"connection requested");
     [self.session acceptConnectionFromPeer:peerID error:nil];
     self.session.available = NO;
-    //NSLog(@"Connection accepted");
+    NSLog(@"Connection accepted");
     self.primary = YES;
 }
 
 -(void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
 {
     if (state == GKPeerStateAvailable) {
-        //NSLog(@"Connecting to peer: %@\n", peerID);
+        NSLog(@"Connecting to peer: %@\n", peerID);
         
         [self.session connectToPeer:peerID withTimeout:2];
-        //NSLog(@"after peer connect");
+        NSLog(@"after peer connect");
     } else if (state == GKPeerStateConnected) {
-        //NSLog(@"connected");
+    NSLog(@"connected");
         self.session.available = NO;
         if (self.primary) {
             [self resetGameAsPrimary];
@@ -143,6 +155,7 @@
 {
     id received = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if ([received isKindOfClass:[NSMutableArray class]]) {
+        NSLog(@"Received map");
         self.mazeView.walls = (NSMutableArray *)received;
         [self.mazeView placeBall];
         self.ballLocation = self.mazeView.ballLocation;
@@ -150,6 +163,7 @@
             [self updateBallPosition];
         }];
     } else if ([received isKindOfClass:[NSString class]]) {
+        //NSLog(@"Received location");
         self.enemyLocation = CGPointFromString(received);
         self.mazeView.enemyLocation = self.enemyLocation;
     };
@@ -160,7 +174,7 @@
     //encode self.mazeView.walls
     NSData *mapData = [NSKeyedArchiver archivedDataWithRootObject:self.mazeView.walls];
     [self.session sendDataToAllPeers:mapData withDataMode:GKSendDataReliable error:nil];
-    //NSLog(@"map sent");
+    NSLog(@"map sent");
 }
 
 -(void)sendData

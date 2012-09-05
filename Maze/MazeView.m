@@ -10,8 +10,6 @@
 
 @interface MazeView ()
 
-
-
 @end
 
 @implementation MazeView
@@ -73,7 +71,10 @@
 -(void)checkWin {
     CGRect winningLocation = CGRectMake(240, 400, 80, 80);
     if (CGRectContainsPoint(winningLocation, self.ballLocation)) {
-        [self.delegate playerDidWin];
+        [self.delegate gameOverPlayerDidWin:YES];
+    }
+    else if(CGRectContainsPoint(winningLocation, self.enemyLocation)) {
+        [self.delegate gameOverPlayerDidWin:NO];
     }
 }
 

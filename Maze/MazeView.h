@@ -11,7 +11,7 @@
 @class MazeView;
 
 @protocol MazeViewDelegate <NSObject>
-- (void) playerDidWin;
+- (void) gameOverPlayerDidWin:(BOOL)won;
 @end
 
 @interface MazeView : UIView
