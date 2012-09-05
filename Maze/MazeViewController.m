@@ -31,7 +31,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Maneesh" sessionMode:GKSessionModePeer];
+        NSLog(@"init");
+        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Michael" sessionMode:GKSessionModePeer];
         [self.session setDataReceiveHandler:self withContext:nil];
         self.session.delegate = self;
         self.session.available = YES;
@@ -44,7 +45,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self resetGame];
 }
 
 - (void)viewDidUnload
@@ -54,16 +54,12 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"view appear!");
     
-    //[self resetGame];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"view disappear!");
-    //[self.motionManager stopDeviceMotionUpdates];
-    //[self.timer invalidate];
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -99,10 +95,16 @@
     [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:^(CMDeviceMotion *motion, NSError *error) {
         [self updateBallPosition];
     }];
+    [self sendMap];
 }
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    [self resetGame];
+    if (self.primary) {
+        [self resetGame];
+    }
+    else{
+        NSLog(@"Waiting for other player");
+    }
 }
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
@@ -125,11 +127,10 @@
         NSLog(@"connected");
         self.session.available = NO;
         if (self.primary) {
-            [self sendMap];
+            [self resetGame];
         }
     } else if (state == GKPeerStateDisconnected) {
         self.session.available = YES;
-        self.primary = NO;
     }
 }
 
@@ -139,9 +140,9 @@
     if ([received isKindOfClass:[NSMutableArray class]]) {
         NSLog(@"walls received");
         self.mazeView.walls = received;
-        //NSLog(@"walls are %@", self.mazeView.walls);
+        NSLog(@"walls are %@", self.mazeView.walls);
     } else if ([received isKindOfClass:[NSString class]]) {
-        //NSLog(@"received location");
+        NSLog(@"received location");
         self.enemyLocation = CGPointFromString(received);
         //NSLog(@"%f, %f", self.enemyLocation.x, self.enemyLocation.y);
         self.mazeView.enemyLocation = self.enemyLocation;
