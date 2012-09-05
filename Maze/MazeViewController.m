@@ -31,13 +31,13 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        NSLog(@"init");
-        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Maneesh" sessionMode:GKSessionModePeer];
+        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Mike" sessionMode:GKSessionModePeer];
         [self.session setDataReceiveHandler:self withContext:nil];
         self.session.delegate = self;
         self.session.available = YES;
         
         self.motionManager = [CMMotionManager new];
+        self.motionManager.deviceMotionUpdateInterval = .01;
     }
     return self;
 }
@@ -99,11 +99,10 @@
 }
 
 -(void)resetGameAsReceiver {
-    MazeView *mazeView = [[MazeView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    MazeView *mazeView = [[MazeView alloc] initAsReceiver];
     mazeView.delegate = self;
     self.view = mazeView;
     self.mazeView = mazeView;
-    self.ballLocation = self.mazeView.ballLocation;
     [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:^(CMDeviceMotion *motion, NSError *error) {
         [self updateBallPosition];
     }];
@@ -115,28 +114,28 @@
         [self resetGame];
     }
     else{
-        NSLog(@"Waiting for other player");
+        [self resetGameAsReceiver];
     }
 }
 
 - (void)session:(GKSession *)session didReceiveConnectionRequestFromPeer:(NSString *)peerID
 {
-    NSLog(@"connection requested");
+    //NSLog(@"connection requested");
     [self.session acceptConnectionFromPeer:peerID error:nil];
     self.session.available = NO;
-    NSLog(@"Connection accepted");
+    //NSLog(@"Connection accepted");
     self.primary = YES;
 }
 
 -(void)session:(GKSession *)session peer:(NSString *)peerID didChangeState:(GKPeerConnectionState)state
 {
     if (state == GKPeerStateAvailable) {
-        NSLog(@"Connecting to peer: %@\n", peerID);
+        //NSLog(@"Connecting to peer: %@\n", peerID);
         
         [self.session connectToPeer:peerID withTimeout:2];
-        NSLog(@"after peer connect");
+        //NSLog(@"after peer connect");
     } else if (state == GKPeerStateConnected) {
-        NSLog(@"connected");
+        //NSLog(@"connected");
         self.session.available = NO;
         if (self.primary) {
             [self resetGame];
@@ -152,13 +151,15 @@
 {
     id received = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if ([received isKindOfClass:[NSMutableArray class]]) {
-        NSLog(@"walls received");
-        NSLog(@"recieved is %@", received);
-        NSLog(@"mazeview is %@", self.mazeView);
+        //NSLog(@"walls received");
+        //NSLog(@"recieved is %@", received);
+        //NSLog(@"mazeview is %@", self.mazeView);
         self.mazeView.walls = (NSMutableArray *)received;
-        NSLog(@"walls are %@", self.mazeView.walls);
+        //NSLog(@"walls are %@", self.mazeView.walls);
+        [self.mazeView placeBall];
+        self.ballLocation = self.mazeView.ballLocation;
     } else if ([received isKindOfClass:[NSString class]]) {
-        NSLog(@"received location");
+       // NSLog(@"received location");
         self.enemyLocation = CGPointFromString(received);
         //NSLog(@"%f, %f", self.enemyLocation.x, self.enemyLocation.y);
         self.mazeView.enemyLocation = self.enemyLocation;
@@ -170,7 +171,7 @@
     //encode self.mazeView.walls
     NSData *mapData = [NSKeyedArchiver archivedDataWithRootObject:self.mazeView.walls];
     [self.session sendDataToAllPeers:mapData withDataMode:GKSendDataReliable error:nil];
-    NSLog(@"map sent");
+    //NSLog(@"map sent");
 }
 
 -(void)sendData

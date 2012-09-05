@@ -16,6 +16,15 @@
 
 @implementation MazeView
 
+- (id)initAsReceiver
+{
+    self = [super initWithFrame:CGRectMake(0, 0, 320, 480)];
+    if (self) {
+        self.backgroundColor = [UIColor blackColor];
+    }
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -49,7 +58,11 @@
             [self.walls addObject:[NSValue valueWithCGRect:wallCandidate]];
         }
     }
-    
+    [self placeBall];
+    [self setNeedsDisplay];
+}
+
+-(void)placeBall {
     BOOL intersects = YES;
     while (intersects) {
         self.ballLocation = CGPointMake((arc4random() %(300-20))+20, (arc4random() %(460-20))+20);
@@ -62,7 +75,6 @@
             }
         }
     }
-    [self setNeedsDisplay];
 }
     
 - (double) distanceFromLocation:(CGPoint)p1 toLocation:(CGPoint)p2

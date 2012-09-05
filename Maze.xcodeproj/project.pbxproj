@@ -243,13 +243,13 @@
 		4CA272A715F52B2200EFD55F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Maneesh Goel (TR7Y5VUNL3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ng (2Y56K94F3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Maze/Maze-Prefix.pch";
 				INFOPLIST_FILE = "Maze/Maze-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B73854BE-BCB7-4561-AC38-F74E28B0557D";
+				PROVISIONING_PROFILE = "769376C2-41D6-4832-A922-76E54561496E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -257,13 +257,13 @@
 		4CA272A815F52B2200EFD55F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Maneesh Goel (TR7Y5VUNL3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Ng (2Y56K94F3U)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Maze/Maze-Prefix.pch";
 				INFOPLIST_FILE = "Maze/Maze-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B73854BE-BCB7-4561-AC38-F74E28B0557D";
+				PROVISIONING_PROFILE = "769376C2-41D6-4832-A922-76E54561496E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
