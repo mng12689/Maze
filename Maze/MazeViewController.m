@@ -32,7 +32,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         NSLog(@"init");
-        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Michael" sessionMode:GKSessionModePeer];
+        self.session = [[GKSession alloc]initWithSessionID:@"ManeeshMaze" displayName:@"Maneesh" sessionMode:GKSessionModePeer];
         [self.session setDataReceiveHandler:self withContext:nil];
         self.session.delegate = self;
         self.session.available = YES;
@@ -98,6 +98,18 @@
     [self sendMap];
 }
 
+-(void)resetGameAsReceiver {
+    MazeView *mazeView = [[MazeView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    mazeView.delegate = self;
+    self.view = mazeView;
+    self.mazeView = mazeView;
+    self.ballLocation = self.mazeView.ballLocation;
+    [self.motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]  withHandler:^(CMDeviceMotion *motion, NSError *error) {
+        [self updateBallPosition];
+    }];
+
+}
+
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (self.primary) {
         [self resetGame];
@@ -128,6 +140,8 @@
         self.session.available = NO;
         if (self.primary) {
             [self resetGame];
+        } else {
+            [self resetGameAsReceiver];
         }
     } else if (state == GKPeerStateDisconnected) {
         self.session.available = YES;
@@ -139,7 +153,9 @@
     id received = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if ([received isKindOfClass:[NSMutableArray class]]) {
         NSLog(@"walls received");
-        self.mazeView.walls = received;
+        NSLog(@"recieved is %@", received);
+        NSLog(@"mazeview is %@", self.mazeView);
+        self.mazeView.walls = (NSMutableArray *)received;
         NSLog(@"walls are %@", self.mazeView.walls);
     } else if ([received isKindOfClass:[NSString class]]) {
         NSLog(@"received location");
